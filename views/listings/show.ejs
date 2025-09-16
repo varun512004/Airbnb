@@ -1,25 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotels</title>
-</head>
-<body>
-    <h1>Listing Details: </h1>
-    <ul>
-        <li>Title: <%= listing.title %></li>
-        <li>Description: <%= listing.description %></li>
-        <li>Image: <%= listing.image %></li>
-        <li>Price: &#8377;<%= listing.price.toLocaleString("en-IN") %></li>
-        <li>Location: <%= listing.location %></li>
-        <li>Country: <%= listing.country %></li>
-    </ul>
-    <br>
-    <button><a href="/listings/<%= listing._id %>/edit"> Edit Details</a></button>
-    <br>
-    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
-        <button>Delete</button>
-    </form>
-</body>
-</html>
+<% layout("/layouts/boilerplate") %>
+    <body>
+        <h1>Listing Details: </h1>
+        <ul>
+            <li>Title: <%= listing.title %></li>
+            <li>Description: <%= listing.description %></li>
+            <li>Image: <%= listing.image %></li>
+            <li>Price: &#8377;<%= listing.price.toLocaleString("en-IN") %></li>
+            <li>Location: <%= listing.location %></li>
+            <li>Country: <%= listing.country %></li>
+        </ul>
+        <br>
+        <button><a href="/listings/<%= listing._id %>/edit"> Edit Details</a></button>
+        <br>
+        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+            <button>Delete</button>
+        </form>
+    </body>

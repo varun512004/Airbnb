@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airbnb</title>
-</head>
+<% layout("/layouts/boilerplate") %>
 <body>
-    <h1>All Hotels</h1>
+    <h4>All Listings</h4>
     <form method="GET" action="/listings/new">
         <button>Create New Listing</button>
     </form>
@@ -16,4 +10,3 @@
         <% } %>
     </ul>
 </body>
-</html>
