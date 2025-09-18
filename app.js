@@ -77,23 +77,3 @@ app.delete("/listings/:id", async(req,res) => {
     console.log(deletedData);
     res.redirect("/listings");
 });
-
-// app.get("/listing", (req, res) => {
-//     let sampleListing = new Listing({
-//         title : "Lotus Villa",
-//         description : "By the beach",
-//         price : 1200,
-//         location : "Calangute, Goa",
-//         country : "India"
-//     });
-
-//     sampleListing.save()
-//     .then(() => {
-//         console.log("Sample was saved!");
-//         res.send("Testing successful!");
-//     })
-//     .catch((err) => {
-//         console.error("Error saving sample:", err);
-//         res.status(500).send("Failed to save sample");
-//     });
-// });

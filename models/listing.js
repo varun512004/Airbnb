@@ -8,14 +8,9 @@ const listingSchema = new Schema({
     },
     description : String,
     image: {
-        filename: {
-            type: String,
-            default: "listingimage" },
-        url: {
             type: String,
             default: "https://static.vecteezy.com/system/resources/thumbnails/031/695/903/small/a-modern-villa-showcasing-open-plan-living-spaces-and-a-private-bedroom-ai-generated-photo.jpg"
-        }
-    },
+        },
     price : Number,
     location : String,
     country : String
