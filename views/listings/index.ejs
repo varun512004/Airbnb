@@ -3,7 +3,7 @@
     <h4>All Listings</h4>
     <% for (let listing of allListings) { %>
     <div class="card" style="width: 18rem;">
-        <img src="<%- listing.image %>" class="card-img-top" alt="image">
+        <img src="<%- listing.image.url %>" class="card-img-top" alt="image">
         <div class="card-body">
             <p class="card-text"><%= listing.title %></p>
         </div>
