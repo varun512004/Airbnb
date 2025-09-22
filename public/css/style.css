@@ -29,6 +29,12 @@ body{
     color: #222222 !important;
 }
 
+footer{
+    background-color: #ffe0e0;
+    padding: 1rem;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
 .f-info{
     display: flex;
     justify-content: space-between;
@@ -37,6 +43,14 @@ body{
 
 .f-info-left, .f-info-right {
     flex: 1;
+}
+
+.f-info-left p, .f-info-left ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
 .f-info-left {
@@ -48,11 +62,11 @@ body{
 
 .f-info-right{
     text-align: right;
-}
-
-.f-info-left ul {
     display: flex;
-    gap: 2rem;
+    justify-content: flex-end;
+    align-items: self-start;
+    gap: 1.5rem;
+    margin-right: 0.5rem;
 }
 
 .f-info-left a, .f-info-right a {
