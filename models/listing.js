@@ -10,12 +10,20 @@ const listingSchema = new Schema({
     image: {
         filename: {
             type: String,
-            default: "listingimage",
+            default: "listingImage",
+            set: (v) =>
+                v && v.trim() !== ""
+                ? v
+                : "listingImage",
         },
         url: {
             type: String,
             default:
             "https://static.vecteezy.com/system/resources/thumbnails/031/695/903/small/a-modern-villa-showcasing-open-plan-living-spaces-and-a-private-bedroom-ai-generated-photo.jpg",
+            set: (v) =>
+                v && v.trim() !== ""
+                ? v
+                : "https://static.vecteezy.com/system/resources/thumbnails/031/695/903/small/a-modern-villa-showcasing-open-plan-living-spaces-and-a-private-bedroom-ai-generated-photo.jpg",
         },
     },
     price : Number,
