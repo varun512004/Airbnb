@@ -24,3 +24,52 @@
         <button class="btn btn-danger offset-4">Delete</button>
     </form>
 </div>
+<hr>
+
+<div class="all-reviews col-8 offset-2 mt-3 mb-3">
+    <h4>All Reviews</h4>
+    <% if(listing.reviews.length > 0) { %>
+    <div class="card">
+        <% listing.reviews.forEach(review => { %>
+            <div class="card-body">
+                <h6 class="card-title mb-0">Varun</h6>
+                <% for(let i = 0; i < review.rating; i++) { %>
+                    <span>&#9733;</span>
+                <% } %>
+                &nbsp;&nbsp;&nbsp;
+                <span><%= new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %> </span> <br>
+                <p><%= review.comment %> </p>
+        </div>
+    <% }) %>
+    </div>
+    <% } else { %>
+        <p>No reviews yet.</p>
+    <% } %>
+    
+</div>
+
+<hr>
+<div class="review col-8 offset-2 mt-3 mb-3">
+    <h4>Leave a Review</h4>
+    <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+        <div class="star-rating d-flex mb-2">
+            <div class="d-flex align-items-center mt-2 mb-2">
+                <h6 class="me-2 star-label">Rating:</h6>
+                <i class="fa-solid fa-star text-warning" data-value="1"></i>
+                <i class="fa-regular fa-star" data-value="2"></i>
+                <i class="fa-regular fa-star" data-value="3"></i>
+                <i class="fa-regular fa-star" data-value="4"></i>
+                <i class="fa-regular fa-star" data-value="5"></i>
+            </div>
+        </div>
+        <!-- hidden input to actually send the rating -->
+        <input type="hidden" name="review[rating]" id="rating-value" value="1" required/>
+        <div class="invalid-feedback">Please select a rating.</div>
+        <div>
+            <label for="comment" class="form-label">Comment:</label>
+            <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please provide a comment.</div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary mt-3">Submit Review</button>
+    </form>
+</div>

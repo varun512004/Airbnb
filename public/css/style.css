@@ -28,12 +28,12 @@ body{
     font-size: 2rem;
 }
 
-.fa-brands{
-    font-family: "Font Awesome 7 Brands" !important;
+.fa, .fa-solid,.fa-regular {
+    font-family: "Font Awesome 7 Free" !important;
 }
 
-.fa, .fa-solid {
-    font-family: "Font Awesome 7 Free" !important;
+.fa-brands{
+    font-family: "Font Awesome 7 Brands" !important;
 }
 
 .navbar {
@@ -110,7 +110,7 @@ footer{
 
 
 /* Cards */
-.card{
+.listing-card{
     border: none !important;
     margin-bottom: 2rem;
 
@@ -176,4 +176,20 @@ footer{
 .show-card{
     padding-left: 0;
     padding-right: 0;
+}
+
+.star-label {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+
+.star-rating i {
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    margin-right: 5px;
+}
+.star-rating i.active {
+    color: #ffca08;
+    /* color: #ffc107; */
 }
