@@ -1,18 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const ejs = require('ejs');
 const path = require("path");
-const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const mongoose = require('mongoose');
-const Listing = require("./models/listing.js");
-const wrapAsync = require("./utils/wrapAsync.js");
+const flash = require("connect-flash");
+const session = require("express-session");
+const methodOverride = require("method-override");
 const expressError = require("./utils/expressError.js");
-const { listingSchema, reviewSchema } = require("./schema.js");
-const Review = require("./models/review.js");
+const listingRoutes = require("./router/listingRoutes.js");
+const reviewRoutes = require("./router/reviewRoutes.js");
 const port = 8080;
-
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
@@ -24,7 +22,7 @@ main().then(() => console.log("Connected to MongoDB Atlas"))
 async function main (){
     await mongoose.connect(process.env.MONGO_URI);
 }
-    
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname,"views"));
 app.use(express.urlencoded({extended : true}));
@@ -32,101 +30,35 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
-const validateListing = (req, res, next) => {
-    const { error } = listingSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map((el) => el.message).join(",");
-        throw new expressError(400, msg);
-    } else {
-        next();
+const sessionOptions = {
+    secret: "mysupersecretcode!",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 10 * 24 * 60 * 60 * 1000,
+        maxAge: 10 * 24 * 60 * 60 * 1000
     }
 };
 
-const validateReview = (req, res, next) => {
-    let { error } = reviewSchema.validate(req.body);
-    if (error) {
-        let msg = error.details.map((el) => el.message).join(",");
-        throw new expressError(400, msg);
-    } else {
-        next();
-    }
-};
+app.use(session(sessionOptions));
+app.use(flash());
 
 app.get('/', (req, res) => {
     res.send('Root Page!');
 });
 
-//Index Route
-app.get("/listings", wrapAsync(async (req,res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", {allListings});
-    })
-);
-
-//New Route
-app.get("/listings/new", (req,res) => {
-    res.render("listings/new.ejs");
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    next();
 });
 
-app.post("/listings", validateListing, wrapAsync(async(req,res) => {
-    const newListing = new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
-    })
-);
-
-//Show Route
-app.get("/listings/:id", wrapAsync(async (req,res) => {
-    let {id} = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
-    res.render("listings/show.ejs",{listing});
-    })
-)
-
-//Edit Route
-app.get("/listings/:id/edit", wrapAsync(async(req,res) => {
-    let {id} = req.params;
-    const listing = await Listing.findById(id);
-    res.render("listings/edit.ejs", {listing});
-})
-);
-
-//Update Route
-app.put("/listings/:id", validateListing, wrapAsync(async(req, res) => {
-    let {id} = req.params;
-    // Ensure image is always an object
-    if (req.body.listing.image && typeof req.body.listing.image === "string") {
-        req.body.listing.image = { url: req.body.listing.image };
-    }
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
-    res.redirect(`/listings/${id}`);
-    })
-);
-
-//Delete Route
-app.delete("/listings/:id", wrapAsync(async(req,res) => {
-    let {id} = req.params;
-    let deletedData = await Listing.findByIdAndDelete(id);
-    console.log(deletedData);
-    res.redirect("/listings");
-    })
-);
-
-// Review Route
-app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    const listing = await Listing.findById(id);
-    let newReview = new Review(req.body.review);
-    listing.reviews.push(newReview);
-    await newReview.save();
-    await listing.save();
-    res.redirect(`/listings/${id}`);
-}));
+app.use("/listings", listingRoutes);
+app.use("/listings/:id/reviews", reviewRoutes);
 
 app.all(/.*/,(req, res, next) => {
     next(new expressError(404, "Page Not Found!"));
 });
-
 
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something Went Wrong" } = err;
