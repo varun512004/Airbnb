@@ -108,22 +108,26 @@ footer{
     font-size: 0.9rem;
 }
 
-
 /* Cards */
 .listing-card{
     border: none !important;
-    margin-bottom: 2rem;
+    border-radius: 1rem;
+    transition: transform 0.2s ease;
+}
 
+.listing-card:hover {
+    transform: translateY(-3px);
 }
 
 .card-img-top{
     border-radius: 1rem !important;
     width: 100% !important;
+    height: 15rem;
     object-fit: cover !important;
 }
 
 .card-body{
-    padding: 0;
+    padding: 0.5rem 0.5rem 1rem 0.5rem;
 }
 
 .card-text{
@@ -132,12 +136,14 @@ footer{
 
 .listing-link{
     text-decoration: none;
+    color: inherit;
 }
 
 /* Card effect */
 
 .card-img-overlay{
     opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .card-img-overlay:hover{

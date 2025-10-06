@@ -10,6 +10,10 @@ const methodOverride = require("method-override");
 const expressError = require("./utils/expressError.js");
 const listingRoutes = require("./router/listingRoutes.js");
 const reviewRoutes = require("./router/reviewRoutes.js");
+const userRoutes = require("./router/userRoutes.js");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 const port = 8080;
 
 app.listen(port, () => {
@@ -44,17 +48,22 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
-app.get('/', (req, res) => {
-    res.send('Root Page!');
-});
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currentUser = req.user;
     next();
 });
 
 app.use("/listings", listingRoutes);
 app.use("/listings/:id/reviews", reviewRoutes);
+app.use("/", userRoutes);
 
 app.all(/.*/,(req, res, next) => {
     next(new expressError(404, "Page Not Found!"));
