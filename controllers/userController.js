@@ -25,8 +25,10 @@ module.exports.loginForm = (req, res) => {
 };
 
 module.exports.login = async (req, res) => {
-        req.flash("success", "Welcome back!");
-        res.redirect(res.locals.redirectUrl || "/listings");
+    req.flash("success", "Welcome back!");
+    const redirectUrl = res.locals.redirectUrl || "/listings";
+    delete req.session.redirectUrl;
+    return res.redirect(redirectUrl);
 };
 
 module.exports.logout = (req, res) => {

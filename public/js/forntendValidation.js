@@ -37,17 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add listeners
     [titleInput, descInput, urlInput, priceInput, countryInput, locationInput].forEach(input => {
         input.addEventListener("input", () => {
-            applyValidation(input, validators[input.name.split("[")[1].replace("]", "")](input.value));
+            const fieldName = input.name.split("[").pop().replace("]", "");
+            if (validators[fieldName]) {
+                applyValidation(input, validators[fieldName](input.value));
+            }
         });
     });
-
-    // titleInput.addEventListener("keyup", () => applyValidation(titleInput, validators.title(titleInput.value)));
-    // descInput.addEventListener("keyup", () => applyValidation(descInput, validators.description(descInput.value)));
-    // fileInput.addEventListener("keyup", () => applyValidation(fileInput, validators.filename(fileInput.value)));
-    // urlInput.addEventListener("keyup", () => applyValidation(urlInput, validators.url(urlInput.value)));
-    // priceInput.addEventListener("keyup", () => applyValidation(priceInput, validators.price(priceInput.value)));
-    // countryInput.addEventListener("keyup", () => applyValidation(countryInput, validators.country(countryInput.value)));
-    // locationInput.addEventListener("keyup", () => applyValidation(locationInput, validators.location(locationInput.value)));
 
     form.addEventListener("submit", (e) => {
         let valid = true;
@@ -67,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
         applyValidation(locationInput, validators.location(locationInput.value));
 
         if (!valid) {
-            e.preventDefault(); // STOP form submission
+            e.preventDefault();
             e.stopPropagation();
         }
     });

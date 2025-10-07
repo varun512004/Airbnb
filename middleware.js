@@ -9,7 +9,7 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.flash("error", "You must be logged in first!");
         return res.redirect("/login");
     }
-    next();
+    return next();
 };
 
 module.exports.saveRedirectUrl = (req, res, next) => {
@@ -20,13 +20,18 @@ module.exports.saveRedirectUrl = (req, res, next) => {
 };
 
 module.exports.isOwner = async (req, res, next) => {
-    let {id} = req.params;
-    let listing = await Listing.findById(id);
-    if(!listing.owner._id.equals(res.locals.currentUser._id)){
-        req.flash("error", "You do not have permission!");
-        return res.redirect(`/listings/${id}`);
+    try{
+        let {id} = req.params;
+        let listing = await Listing.findById(id);
+        if(!listing.owner._id.equals(res.locals.currentUser._id)){
+            req.flash("error", "You do not have permission!");
+            return res.redirect(`/listings/${id}`);
+        }
+        next();
+    } catch (e) {
+        req.flash("error", "Cannot find that property!");
+        return res.redirect("/listings");
     }
-    next();
 };
 
 module.exports.isReviewAuthor = async (req, res, next) => {

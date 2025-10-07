@@ -8,7 +8,7 @@ const ListingController = require("../controllers/listingController.js");
 router.get("/", wrapAsync(ListingController.index));
 
 //New Route
-router.get("/new", isLoggedIn, wrapAsync(ListingController.showNewForm));
+router.get("/new", isLoggedIn, ListingController.showNewForm);
 router.post("/", isLoggedIn, validateListing, wrapAsync(ListingController.addNewListing));
 
 //Show Route
