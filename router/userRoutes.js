@@ -1,50 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const User = require("../models/user.js");
 const wrapAsync = require('../utils/wrapAsync.js');
 const passport = require('passport');
 const { saveRedirectUrl } = require('../middleware.js');
+const userController = require('../controllers/userController.js');
 
-router.get("/signup", (req, res) => {
-    res.render("users/signup.ejs");
-});
+router.get("/signup", userController.signup);
 
-router.post("/signup", wrapAsync(async (req, res) => {
-    try {
-        let { email, username, password } = req.body;
-        const newUser = new User({ email, username });
-        let registeredUser = await User.register(newUser, password);
-        req.login(registeredUser, err => {
-            if (err) return next(err);
-            req.flash("success", "Welcome to Airbnb!");
-            res.redirect("/listings");
-        });
-    } catch (e) {
-        req.flash("error", e.message);
-        res.redirect("/signup");
-    }
-}));
+router.post("/signup", wrapAsync(userController.createUser));
 
-router.get("/login", (req, res) => {
-    res.render("users/login.ejs");
-});
+router.get("/login", userController.loginForm);
 
 router.post("/login", saveRedirectUrl, passport.authenticate("local", {
     failureRedirect: "/login",
-    failureFlash: true}),
-    wrapAsync(async (req, res) => {
-    req.flash("success", "Welcome back!");
-    res.redirect(res.locals.redirectUrl || "/listings");
-}));
+    failureFlash: "Invalid username or password."
+}), wrapAsync(userController.login));
 
-router.get("/logout", (req, res) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash("success", "Logout!");
-        res.redirect("/listings");
-    });
-});
+router.get("/logout", userController.logout);
 
 module.exports = router;

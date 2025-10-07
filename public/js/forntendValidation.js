@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     // Get all inputs
+    const form = document.querySelector("form.needs-validation");
     const titleInput = document.querySelector("input[name='listing[title]']");
     const descInput = document.querySelector("input[name='listing[description]']");
-    const fileInput = document.querySelector("input[name='listing[image][filename]']");
     const urlInput = document.querySelector("input[name='listing[image][url]']");
     const priceInput = document.querySelector("input[name='listing[price]']");
     const countryInput = document.querySelector("input[name='listing[country]']");
@@ -13,14 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
         title: (data) => data.trim().length >= 3,
         description: (data) => data.trim().length >= 10,
         filename: (data) => data.trim() !== "",
-        url: (data) => /^https:\/\/.+/i.test(data),
-        // url: (data) => /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data),
-        // url: (data) => /^\/?images\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data),
-        // url: (data) => {
-        //     const isUrl = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
-        //     const isLocalPath = /^\/?images\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
-        //     return isUrl || isLocalPath;
-        // },
+        url: (data) => {
+            const isUrl = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
+            const isLocalPath = /^\/?images\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
+            return isUrl || isLocalPath;
+        },
         price: (data) => /^[0-9]+(\.[0-9]{1,2})?$/.test(data) && Number(data) > 0,
         country: (data) => /^[A-Za-z\s]+$/.test(data) && data.trim().length >= 2,
         location: (data) => data.trim().length >= 2
@@ -38,11 +35,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Add listeners
-    titleInput.addEventListener("keyup", () => applyValidation(titleInput, validators.title(titleInput.value)));
-    descInput.addEventListener("keyup", () => applyValidation(descInput, validators.description(descInput.value)));
-    fileInput.addEventListener("keyup", () => applyValidation(fileInput, validators.filename(fileInput.value)));
-    urlInput.addEventListener("keyup", () => applyValidation(urlInput, validators.url(urlInput.value)));
-    priceInput.addEventListener("keyup", () => applyValidation(priceInput, validators.price(priceInput.value)));
-    countryInput.addEventListener("keyup", () => applyValidation(countryInput, validators.country(countryInput.value)));
-    locationInput.addEventListener("keyup", () => applyValidation(locationInput, validators.location(locationInput.value)));
+    [titleInput, descInput, urlInput, priceInput, countryInput, locationInput].forEach(input => {
+        input.addEventListener("input", () => {
+            applyValidation(input, validators[input.name.split("[")[1].replace("]", "")](input.value));
+        });
+    });
+
+    // titleInput.addEventListener("keyup", () => applyValidation(titleInput, validators.title(titleInput.value)));
+    // descInput.addEventListener("keyup", () => applyValidation(descInput, validators.description(descInput.value)));
+    // fileInput.addEventListener("keyup", () => applyValidation(fileInput, validators.filename(fileInput.value)));
+    // urlInput.addEventListener("keyup", () => applyValidation(urlInput, validators.url(urlInput.value)));
+    // priceInput.addEventListener("keyup", () => applyValidation(priceInput, validators.price(priceInput.value)));
+    // countryInput.addEventListener("keyup", () => applyValidation(countryInput, validators.country(countryInput.value)));
+    // locationInput.addEventListener("keyup", () => applyValidation(locationInput, validators.location(locationInput.value)));
+
+    form.addEventListener("submit", (e) => {
+        let valid = true;
+        if (!validators.title(titleInput.value)) valid = false;
+        if (!validators.description(descInput.value)) valid = false;
+        if (!validators.url(urlInput.value)) valid = false;
+        if (!validators.price(priceInput.value)) valid = false;
+        if (!validators.country(countryInput.value)) valid = false;
+        if (!validators.location(locationInput.value)) valid = false;
+
+        // Apply classes
+        applyValidation(titleInput, validators.title(titleInput.value));
+        applyValidation(descInput, validators.description(descInput.value));
+        applyValidation(urlInput, validators.url(urlInput.value));
+        applyValidation(priceInput, validators.price(priceInput.value));
+        applyValidation(countryInput, validators.country(countryInput.value));
+        applyValidation(locationInput, validators.location(locationInput.value));
+
+        if (!valid) {
+            e.preventDefault(); // STOP form submission
+            e.stopPropagation();
+        }
+    });
 });

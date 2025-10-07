@@ -175,6 +175,10 @@ footer{
     height: 30vh;
 }
 
+.card-body p{
+    margin-bottom: 0.5rem;
+}
+
 .btns{
     display: flex;
 }

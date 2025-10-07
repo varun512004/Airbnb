@@ -13,17 +13,10 @@
                 <input type="text" class="form-control" name="listing[description]" value="<%= listing.description %>" required>
                 <div class="invalid-feedback">Please enetr valid description.</div>
             </div>
-            <div class="row">
-                <div class="mb-3 col-md-4">
-                    <label for="listingImage" class="form-lable">File Name:</label>
-                    <input type="text" class="form-control" name="listing[image][filename]" value="<%= listing.image.filename %>" required>
-                    <div class="invalid-feedback">Please enetr valid image name.</div>
-                </div>
-                <div class="mb-3 col-md-8">
-                    <label for="image" class="form-lable">Image Link:</label>
-                    <input type="text" class="form-control" name="listing[image][url]" value="<%= listing.image.url %>" required>
-                    <div class="invalid-feedback">Please enetr valid image link.</div>
-                </div>
+            <div class="mb-3">
+                <label for="image" class="form-lable">Image Link:</label>
+                <input type="text" class="form-control" name="listing[image][url]" value="<%= listing.image.url %>" required>
+                <div class="invalid-feedback">Please enetr valid image Url or path.</div>
             </div>
             <div class="row">
                 <div class="mb-3 col-md-4">

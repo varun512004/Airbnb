@@ -12,10 +12,6 @@ const listingSchema = new Schema({
         filename: {
             type: String,
             default: "listingImage",
-            set: (v) =>
-                v && v.trim() !== ""
-                ? v
-                : "listingImage",
         },
         url: {
             type: String,
@@ -30,12 +26,21 @@ const listingSchema = new Schema({
     price : Number,
     location : String,
     country : String,
-    reviews: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Review"
-        }
-    ],
+    reviews : [{
+        type: Schema.Types.ObjectId,
+        ref: "Review"
+    }],
+    owner : {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    },
+});
+
+listingSchema.pre("save", function (next) {
+    if (!this.image.filename || this.image.filename === "listingImage") {
+    this.image.filename = this.title.trim().toLowerCase().replace(/\s+/g, "_");
+    }
+    next();
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {

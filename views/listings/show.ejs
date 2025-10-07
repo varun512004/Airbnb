@@ -6,21 +6,23 @@
         </div>
         <img src="<%= listing.image.url %>" class="card-img-top show-img ms-3" alt="<%= listing.image.filename %>">
         <div class="card-body">
-            <p class="card-text">
-                <%= listing.description %> <br>
-                &#8377;<%= listing.price.toLocaleString("en-IN") %> <br>
-                <%= listing.location %> <br>
-                <%= listing.country %>
-            </p>
+                <p class="fa-solid fa-user"></p><i class="fw-bold card-text"><%= listing.owner.username %></i>
+                <p class="card-text"><%= listing.description %></p>
+                <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %></p>
+                <p class="card-text"><%= listing.location %></p>
+                <p class="card-text"><%= listing.country %></p>
         </div>
     </div>
 </div>
-<div class="btns">
-    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark offset-2">Edit</a>
-    <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-danger offset-4">Delete</button>
-    </form>
-</div>
+
+<% if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
+    <div class="btns">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark offset-2">Edit</a>
+        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger offset-4">Delete</button>
+        </form>
+    </div>
+<% } %>
 <hr>
 
 <div class="all-reviews col-8 offset-2 mt-3 mb-3">
@@ -30,7 +32,7 @@
             <% listing.reviews.forEach(review => { %>
             <div class="card col-5 ms-2 mb-2">
                 <div class="card-body">
-                    <h5 class="card-title mb-0">Varun</h5>
+                    <h5 class="card-title mb-0">@<%= review.author.username %></h5>
                     <% for(let i = 0; i < review.rating; i++) { %>
                         <span>&#9733;</span>
                     <% } %>
@@ -38,7 +40,9 @@
                     <span class="review-date"><%= new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %> </span> <br>
                     <p><%= review.comment %> </p>
                     <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                        <% if (currentUser && review.author.equals(currentUser._id)) { %>
                         <button class="btn btn-danger">Delete</button>
+                        <% } %>
                     </form>
                 </div>
             </div>
@@ -50,6 +54,7 @@
 </div>
 
 <hr>
+<% if (currentUser) { %>
 <div class="review col-8 offset-2 mt-3 mb-3">
     <h4>Leave a Review</h4>
     <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
@@ -74,3 +79,4 @@
         <button type="submit" class="btn btn-outline-primary mt-3">Submit Review</button>
     </form>
 </div>
+<% } %>
