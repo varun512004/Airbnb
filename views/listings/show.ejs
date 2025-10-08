@@ -33,11 +33,14 @@
             <div class="card col-5 ms-2 mb-2">
                 <div class="card-body">
                     <h5 class="card-title mb-0">@<%= review.author.username %></h5>
-                    <% for(let i = 0; i < review.rating; i++) { %>
-                        <span>&#9733;</span>
-                    <% } %>
-                    &nbsp;&nbsp;&nbsp;
-                    <span class="review-date"><%= new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %> </span> <br>
+                    <div class="d-flex align-items-center mt-1 mb-1 gap-2">
+                        <div class="review-stars">
+                            <% for(let i = 0; i < review.rating; i++) { %>
+                                <i class="fa-solid fa-star text-warning"></i>
+                            <% } %>
+                        </div>
+                        <span class="review-date"><%= new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
+                    </div>
                     <p><%= review.comment %> </p>
                     <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
                         <% if (currentUser && review.author.equals(currentUser._id)) { %>
@@ -60,7 +63,7 @@
     <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
         <div class="star-rating d-flex mb-2">
             <div class="d-flex align-items-center mt-2 mb-2">
-                <h6 class="me-2 star-label">Rating:</h6>
+                <label class="me-2 form-label">Rating:</label>
                 <i class="fa-solid fa-star text-warning" data-value="1"></i>
                 <i class="fa-regular fa-star" data-value="2"></i>
                 <i class="fa-regular fa-star" data-value="3"></i>

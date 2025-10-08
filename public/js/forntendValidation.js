@@ -13,11 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
         title: (data) => data.trim().length >= 3,
         description: (data) => data.trim().length >= 10,
         filename: (data) => data.trim() !== "",
-        url: (data) => {
-            const isUrl = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
-            const isLocalPath = /^\/?images\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
-            return isUrl || isLocalPath;
-        },
+        url: (data) => /^.+\.(jpg|jpeg|png|gif|webp)$/i.test(data),
+            // const isUrl = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
         price: (data) => /^[0-9]+(\.[0-9]{1,2})?$/.test(data) && Number(data) > 0,
         country: (data) => /^[A-Za-z\s]+$/.test(data) && data.trim().length >= 2,
         location: (data) => data.trim().length >= 2

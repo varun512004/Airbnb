@@ -188,7 +188,7 @@ footer{
     padding-right: 0;
 }
 
-.star-label {
+.form-label {
     font-size: 1.1rem;
     margin-bottom: 0;
 }
@@ -196,12 +196,40 @@ footer{
 .star-rating i {
     font-size: 1.3rem;
     cursor: pointer;
-    transition: color 0.2s;
+    transition: color 0.3s ease, transform 0.2s ease;
     margin-right: 5px;
 }
+
 .star-rating i.active {
     color: #ffca08;
-    /* color: #ffc107; */
+}
+
+@keyframes spin-pop {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(135deg) scale(1.4);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.star-rating i.animate {
+    animation: spin-pop 0.6s ease forwards;
+}
+
+.review-stars {
+    color: #ffca08;
+    margin-right: 2px;
+    font-size: 0.5rem;
+}
+
+.review-stars i {
+    color: #ffca08;
+    margin-right: 2px;
+    font-size: 0.5rem;
 }
 
 .review-date{

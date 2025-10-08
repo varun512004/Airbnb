@@ -1,21 +1,21 @@
 <% layout("/layouts/boilerplate") %>
 <div class="row mt-3">
     <div class="col-8 offset-1">
-        <h1>Creating a new listing</h1>
-        <form method="POST" action="/listings" class = "needs-validation" novalidate>
+        <h1>Add a new Property</h1>
+        <form method="POST" action="/listings" enctype="multipart/form-data" class = "needs-validation" novalidate>
             <div class="mb-3">
                 <label for="title" class="form-lable">Title:</label>
                 <input type="text" class="form-control" name="listing[title]" placeholder="Enter Title" required>
-                <div class="invalid-feedback">Please enetr valid title.</div>
+                <div class="invalid-feedback">Please enter valid title.</div>
             </div>
             <div class="mb-3">
-                <label for="descripton" class="form-lable">Description:</label>
+                <label for="description" class="form-lable">Description:</label>
                 <input type="text" class="form-control" name="listing[description]" placeholder="Enter description" required>
-                <div class="invalid-feedback">Please enetr valid description.</div>
+                <div class="invalid-feedback">Please enter valid description.</div>
             </div>
             <div class="mb-3">
-                <label for="image" class="form-lable">Image Link:</label>
-                <input type="text" class="form-control" name="listing[image][url]" placeholder="Enter image URL">
+                <label for="image" class="form-lable">Upload Image:</label>
+                <input type="file" class="form-control" name="listing[image][url]">
                 <div class="invalid-feedback">Please enter valid image URL or path.</div>
             </div>
             <div class="row">
