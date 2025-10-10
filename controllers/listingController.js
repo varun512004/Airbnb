@@ -12,8 +12,12 @@ module.exports.showNewForm = (req, res) => {
 };
 
 module.exports.addNewListing = async (req, res) => {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    // console.log(filename, "......", url);
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
+    newListing.image = {filename, url}
     await newListing.save();
     req.flash("success", "New Property Added Successfully!");
     res.redirect("/listings");
