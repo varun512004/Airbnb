@@ -1,5 +1,6 @@
 {
     "postman.settings.dotenv-detection-notification-visibility": false,
     "editor.wrappingIndent": "indent",
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "github.copilot.nextEditSuggestions.enabled": true
 }

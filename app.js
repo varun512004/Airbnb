@@ -75,3 +75,4 @@ app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something Went Wrong" } = err;
     res.status(statusCode).render("listings/error.ejs", { message, statusCode });
 });
+
