@@ -48,7 +48,11 @@ module.exports.showEditForm = async(req,res) => {
 //Update Controller
 module.exports.updateListing = async(req, res) => {
     let {id} = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    let listing = await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    let url = req.file.path;
+    let filename = req.file.filename;
+    listing.image = {filename, url};
+    await listing.save();
     req.flash("success", "Property Updated!");
     res.redirect(`/listings/${id}`);
 };
