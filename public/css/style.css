@@ -19,8 +19,9 @@ body{
 }
 
 /* header */
+
 #logo, #logo i{
-    color: #FF385C;
+    color: #fe424d;
     vertical-align: middle;
 }
 
@@ -44,8 +45,9 @@ body{
 
 .nav-link{
     color: #222222 !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 2rem;
 }
-
 
 /* footer */
 footer{
@@ -137,6 +139,36 @@ footer{
 .listing-link{
     text-decoration: none;
     color: inherit;
+}
+
+.filters{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.filter{
+    margin-top: 1rem;
+    text-align: center;
+    /* margin-right: 2rem; */
+    opacity: 0.7;
+}
+.filter p {
+    font-size: 0.85rem;
+    /* margin: 0.3rem 0 0 0; */
+}
+.filter:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+
+.tax-toggle{
+    border: 1px solid rgb(143, 139, 139);
+    border-radius: 2rem;
+    padding: 0.75rem;
+    margin-left: 2rem;
 }
 
 /* Card effect */

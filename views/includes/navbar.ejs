@@ -1,3 +1,76 @@
+<style>
+    .search-btn{
+    background-color: #fe424d;
+    color: #fff;
+    border-radius: 100%;
+    /* padding: 0 1rem 0 1rem; */
+    }
+    .search-btn:hover{
+        background-color: #fe424d;
+        color: #fff;
+    }
+    .search-btn i{
+        display: inline;
+        /* margin-right: 0.5rem; */
+    }
+
+    .search-input{
+        border-radius: 25px;
+        padding: 0.5rem 3rem 0.5rem 3rem;
+        font-size: 0.9rem;
+    }
+
+/* Dropdown button */
+.dropdown-toggle::after {
+    display: none;
+}
+.dropdown .btn {
+    background-color: white; /* Airbnb style clean white button */
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 1.2rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.dropdown .btn:hover {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    background-color: #f7f7f7;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    border-radius: 12px;
+    padding: 0.5rem 0;
+    min-width: 150px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border: none;
+}
+
+/* Dropdown items */
+.dropdown-item {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    color: #222;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f7f7f7;
+}
+
+/* Optional: spacing for dropdown icon */
+.dropdown .fa-bars {
+    font-size: 1.2rem;
+}
+
+</style>
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" id="logo" href="/listings"><i class="fa-brands fa-airbnb"></i>airbnb</a>
@@ -5,17 +78,27 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link" href="/listings">Explore</a>
-                    </div>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/listings/new">Airbnb your home</a>
-                <% if(currentUser) { %>
-                    <a class="nav-link" href="/logout">Logout</a>
-                <% } else { %>
-                    <a class="nav-link" href="/signup">Signup</a>
-                    <a class="nav-link" href="/login">Login</a>
-                <% } %>
+                <form class="d-flex" role="search">
+                    <input class="search-input form-control me-2" type="search" placeholder="Search Destination"/>
+                    <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link px-4 me-4" href="/listings/new">Airbnb your home</a>
+                <div class="dropdown ms-auto">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <% if(currentUser) { %>
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        <% } else { %>
+                            <li><a class="dropdown-item" href="/signup">Signup</a></li>
+                            <li><a class="dropdown-item" href="/login">Login</a></li>
+                        <% } %>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

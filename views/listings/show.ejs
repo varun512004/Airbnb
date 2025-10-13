@@ -8,7 +8,9 @@
         <div class="card-body">
                 <p class="fa-solid fa-user"></p><i class="fw-bold card-text"><%= listing.owner.username %></i>
                 <p class="card-text"><%= listing.description %></p>
-                <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %></p>
+                <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %>
+                    <i class="tax-info-gst-info">&nbsp;+18% GST</i>
+                </p>
                 <p class="card-text"><%= listing.location %></p>
                 <p class="card-text"><%= listing.country %></p>
         </div>

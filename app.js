@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const mongoose = require('mongoose');
 const flash = require("connect-flash");
 const session = require("express-session");
+const MonogStore = require("connect-mongo")
 const methodOverride = require("method-override");
 const expressError = require("./utils/expressError.js");
 const listingRoutes = require("./router/listingRoutes.js");
@@ -16,6 +17,7 @@ const userRoutes = require("./router/userRoutes.js");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const MongoStore = require('connect-mongo');
 const port = 8080;
 
 app.listen(port, () => {
@@ -36,7 +38,20 @@ app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+const store = MongoStore.create({
+    mongoUrl:process.env.MONGO_URI,
+    crypto: {
+        secret: "mysupersecretcode!"
+    },
+    touchAfter: 24*3600
+});
+
+store.on("error", () => {
+    console.log("Error in MONGO SESSION STORE", err);
+});
+
 const sessionOptions = {
+    store,
     secret: "mysupersecretcode!",
     resave: false,
     saveUninitialized: true,
