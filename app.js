@@ -20,10 +20,6 @@ const User = require("./models/user.js");
 const MongoStore = require('connect-mongo');
 const port = 8080;
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-});
-
 main().then(() => console.log("Connected to MongoDB Atlas"))
 .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -46,7 +42,7 @@ const store = MongoStore.create({
     touchAfter: 24*3600
 });
 
-store.on("error", () => {
+store.on("error", (err) => {
     console.log("Error in MONGO SESSION STORE", err);
 });
 
@@ -91,3 +87,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("listings/error.ejs", { message, statusCode });
 });
 
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});

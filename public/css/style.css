@@ -165,7 +165,9 @@ footer{
 
 
 .tax-toggle{
-    border: 1px solid rgb(143, 139, 139);
+    border: none;
+    background-color: whitesmoke;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 2rem;
     padding: 0.75rem;
     margin-left: 2rem;

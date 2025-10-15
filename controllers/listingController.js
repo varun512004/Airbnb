@@ -1,14 +1,17 @@
 const Listing = require("../models/listing.js");
+const Category = require("../models/category.js");
 
 //Index Controller
 module.exports.index = async (req,res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", {allListings});
+    // const allListings = await Listing.find({});
+    const allListings = await Listing.find({}).populate("category");
+    res.render("listings/index.ejs", { allListings, categories });
 };
 
 //New Controller
-module.exports.showNewForm = (req, res) => {
-    res.render("listings/new.ejs");
+module.exports.showNewForm = async(req, res) => {
+    const categories = await Category.find({});
+    res.render("listings/new.ejs", { categories });
 };
 
 module.exports.addNewListing = async (req, res) => {

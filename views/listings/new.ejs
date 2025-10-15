@@ -35,6 +35,16 @@
                 <input type="text" class="form-control" name="listing[location]" placeholder="Enter location" required>
                 <div class="invalid-feedback">Please enetr valid location.</div>
             </div>
+            <div class="mb-3">
+                <label for="category" class="form-lable">Category:</label>
+                <select class="form-control" name="listing[category]" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <% for(let category of categories){ %>
+                        <option value="<%= category._id %>"><%= category.name %></option>
+                    <% } %>
+                </select>
+                <div class="invalid-feedback">Please select a category.</div>
+            </div>
             <button class="btn btn-dark add-btn mt-3" type="submit">Add</button>
         </form>
     </div>
