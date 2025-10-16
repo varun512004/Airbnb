@@ -29,11 +29,10 @@ const listingSchema = new Schema({
         ref: "User",
         required: true,
     },
-    category: {
+    category: [{
         type: Schema.Types.ObjectId,
-        ref: "Category",
-        required: true
-    },
+        ref: "Category"
+    }],
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {

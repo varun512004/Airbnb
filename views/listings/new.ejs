@@ -36,8 +36,8 @@
                 <div class="invalid-feedback">Please enetr valid location.</div>
             </div>
             <div class="mb-3">
-                <label for="category" class="form-lable">Category:</label>
-                <select class="form-control" name="listing[category]" required>
+                <label for="category" class="form-label">Category:</label>
+                <select class="form-control" name="listing[category][]" multiple required>
                     <option value="" disabled selected>Select Category</option>
                     <% for(let category of categories){ %>
                         <option value="<%= category._id %>"><%= category.name %></option>

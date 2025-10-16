@@ -1,57 +1,12 @@
 <% layout("/layouts/boilerplate") %>
-<!-- <div class ="filters">
-    <div class="filter">
-        <div><i class="fa-solid fa-fire"></i></div>
-        <p>Trending</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></div>
-        <p>Rooms</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
-        <p>Iconic Cities</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-mountain-sun"></i></div>
-        <p>Mountain</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-chess-rook"></i></div>
-        <p>Castles</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
-        <p>Amazing Pools</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-campground"></i></div>
-        <p>Camping</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-tractor"></i></div>
-        <p>Farms</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-regular fa-snowflake"></i></div>
-        <p>Arctic</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-umbrella-beach"></i></div>
-        <p>Beach</p>
-    </div>
-    <div class="filter">
-        <div><i class="fa-solid fa-ship"></i></div>
-        <p>Boat</p>
-    </div> -->
 <div class="filters">
-        <% for (let category of categories) { %>
-            <div class="filter" data-category="<%= category._id %>">
-                <div><i class="<%= category.iconClass %>"></i></div>
-                <p><%= category.name %></p>
-            </div>
-        <% } %>
-    </div>
+    <% for (let category of categories) { %>
+        <div class="filter" data-category="<%= category._id %>">
+            <div><i class="<%= category.iconClass %>"></i></div>
+            <p><%= category.name %></p>
+        </div>
+    <% } %>
+    <!-- </div> -->
 
     <div class="tax-toggle">
         <div class="form-check form-check-reverse form-switch">
@@ -65,7 +20,7 @@
     <% for (let listing of allListings) { %>
     <div class="col">
         <a href="/listings/<%= listing._id %>" class="listing-link">
-            <div class="card listing-card h-100">
+            <div class="card listing-card h-100" data-category="<%= listing.category.map(c => c._id).join(',') %>">
                 <img src="<%- listing.image.url %>" class="card-img-top" alt="image">
                 <div class="card-img-overlay"></div>
                 <div class="card-body">
@@ -83,3 +38,23 @@
     </div>
     <% } %>
 </div>
+
+<script>
+    const filters = document.querySelectorAll(".filter");
+    const listings = document.querySelectorAll(".listing-card");
+
+    filters.forEach(filter => {
+        filter.addEventListener("click", () => {
+            const categoryId = filter.dataset.category;
+
+            listings.forEach(listing => {
+                const listingCategories = listing.dataset.category.split(",");
+                if (categoryId === "all" || listingCategories.includes(categoryId)) {
+                    listing.closest(".col").style.display = "block";
+                } else {
+                    listing.closest(".col").style.display = "none";
+                }
+            });
+        });
+    });
+</script>

@@ -347,6 +347,72 @@ const sampleListings = [
     location: "Costa Rica",
     country: "Costa Rica",
   },
+  {
+    title: 'The Oberoi Udaivila',
+    description: 'Luxury Resort',
+    image: {
+      url: 'https://media.cntraveler.com/photos/5c06e5a701ffc86b13da2528/16:9/w_2560,c_limit/The-Oberoi-Udaivilas,-Udaipur__2018_Premier-Lake-View-Rooms-with-Semi-Private-Pools---The-Oberoi-Udaivilas,-Udaipur-01.jpg',
+      filename: 'the_oberoi_udaivila'
+    },
+    price: 3500,
+    location: 'Udaipur, Rajasthan',
+    country: 'Inida',
+  },
+  {
+    title: 'Taj Lake Palace',
+    description: 'Mughal-inspired luxury hotel in Udaipur',
+    image: {
+      url: 'https://udaipurtourism.co.in/images/places-to-visit/headers/taj-lake-palace-udaipur-indian-tourism-entry-fee-timings-holidays-reviews-header.jpg',
+      filename: 'taj_lake_palace'
+    },
+    price: 5000,
+    location: 'Udaipur, Rajasthan',
+    country: 'India'
+  },
+  {
+    title: 'The Attic Library',
+    description: 'Hut in Bir',
+    image: {
+      url: 'https://gos3.ibcdn.com/80c3767e-4dcc-4b5b-8aef-c91c7c4528d3.JPG',
+      filename: 'the_attic_library'
+    },
+    price: 3424,
+    location: 'Bir, Himachal Pradesh',
+    country: 'India',
+  },
+  {
+    title: 'Six Senses Fort',
+    description: 'An enclosed private sanctuary of luxury suites with spacious terraces offering expansive views.',
+    image: {
+      filename: 'airbnb_DEV/kpqrqdddxtqjyczqldks',
+      url: 'https://res.cloudinary.com/dv0301oyn/image/upload/v1759996782/airbnb_DEV/kpqrqdddxtqjyczqldks.jpg'
+    },
+    price: 19800,
+    location: 'Barwara, Rajasthan',
+    country: 'India',
+  },
+  {
+    title: 'The Oberoi Vanyavilas',
+    description: 'A luxurious gateway to this untamed wilderness, blending the romance of the jungle with the elegance of world class hospitality.',
+    image: {
+      filename: 'airbnb_DEV/evwgvwalkdlm2uhu3qfd',
+      url: 'https://res.cloudinary.com/dv0301oyn/image/upload/v1759997142/airbnb_DEV/evwgvwalkdlm2uhu3qfd.jpg'
+    },
+    price: 95794,
+    location: 'Ranthambore, Rajasthan',
+    country: 'India',
+  },
+  {
+    title: 'Invisible House',
+    description: 'A famous modern architectural house in Joshua Tree, California, known for its mirrored exterior that reflects the desert landscape, making it appear nearly invisible.',
+    image: {
+      filename: 'airbnb_DEV/ybewg4hdtdrpipocytei',
+      url: 'https://res.cloudinary.com/dv0301oyn/image/upload/v1760592430/airbnb_DEV/ybewg4hdtdrpipocytei.jpg'
+    },
+    price: 245999,
+    location: 'California',
+    country: 'United States of America',
+  }
 ];
 
 module.exports = { data: sampleListings };
