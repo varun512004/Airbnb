@@ -47,9 +47,9 @@
 /* Dropdown menu */
 .dropdown-menu {
     border-radius: 12px;
-    padding: 0.5rem 0;
+    padding: 0 !important;
     min-width: 150px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     border: none;
 }
 
@@ -68,6 +68,23 @@
 /* Optional: spacing for dropdown icon */
 .dropdown .fa-bars {
     font-size: 1.2rem;
+}
+
+.dropdown-menu .text-muted {
+    font-size: 0.9rem;
+    color: #fe424d !important;
+}
+
+.dropdown-item.text-success:hover {
+    background-color: #28a745; /* Bootstrap green */
+    color: #fff !important;
+    text-decoration: underline;
+}
+
+.dropdown-item.text-primary:hover {
+    background-color: #007bff; /* Bootstrap blue */
+    color: #fff !important;
+    text-decoration: underline;
 }
 
 </style>
@@ -92,10 +109,16 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <% if(currentUser) { %>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            <li class="px-3 pt-2 text-muted">
+                                <span class="small">Hello,</span> 
+                                <strong><%= currentUser.username %></strong>
+                            </li>
+                            <li><hr class="dropdown-divider my-1"></li>
+                            <li class="px-3 pb-2 text-muted"><a class="dropdown-item" href="/logout">Logout</a></li>
                         <% } else { %>
-                            <li><a class="dropdown-item" href="/signup">Signup</a></li>
-                            <li><a class="dropdown-item" href="/login">Login</a></li>
+                            <li><a class="dropdown-item text-primary" href="/signup">Signup</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-success" href="/login">Login</a></li>
                         <% } %>
                     </ul>
                 </div>

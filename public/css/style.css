@@ -40,12 +40,12 @@ body{
 .navbar {
     height: 5rem;
     background-color: whitesmoke;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .nav-link{
-    color: #222222 !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #fe424d !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     border-radius: 2rem;
 }
 
