@@ -9,15 +9,8 @@ module.exports.createUser = async (req, res) => {
     try {
         let { email, username, password, role } = req.body;
         const otp = Math.floor(100000 + Math.random() * 900000);
-        const otpExpires = Date.now() + 5 * 60 * 1000; // 5 minutes
+        const otpExpires = Date.now() + 5 * 60 * 1000;
         req.session.signupData = { email, username, password, role, otp, otpExpires};
-        // const newUser = new User({ email, username, role});
-        // let registeredUser = await User.register(newUser, password);
-        // req.login(registeredUser, err => {
-        //     if (err) return next(err);
-        //     req.flash("success", "Welcome to Airbnb!");
-        //     res.redirect("/listings");
-        // });
         await sendOTP(email, otp);
         req.flash("success", "OTP sent to your email! Please verify.");
         res.redirect("/verifyOtp");
@@ -77,7 +70,6 @@ module.exports.verifyOTP = async (req, res) => {
         return res.redirect("/signup");
     }
 };
-
 
 module.exports.loginForm = (req, res) => {
     res.render("users/login.ejs");
