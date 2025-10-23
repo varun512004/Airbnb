@@ -17,6 +17,11 @@
 </div>
 <br>
 <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-3 mt-3">
+    <% if (allListings.length === 0) { %>
+        <div class="alert alert-warning text-center mt-3">
+            No listings found for "<%= q %>"
+        </div>
+    <% } %>
     <% for (let listing of allListings) { %>
     <div class="col">
         <a href="/listings/<%= listing._id %>" class="listing-link">

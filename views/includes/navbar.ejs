@@ -48,7 +48,7 @@
 .dropdown-menu {
     border-radius: 12px;
     padding: 0 !important;
-    min-width: 150px;
+    /* min-width: 150px; */
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     border: none;
 }
@@ -65,7 +65,6 @@
     background-color: #f7f7f7;
 }
 
-/* Optional: spacing for dropdown icon */
 .dropdown .fa-bars {
     font-size: 1.2rem;
 }
@@ -76,15 +75,43 @@
 }
 
 .dropdown-item.text-success:hover {
-    background-color: #28a745; /* Bootstrap green */
+    background-color: #28a745;
     color: #fff !important;
     text-decoration: underline;
+    border-radius: 12px;
 }
 
 .dropdown-item.text-primary:hover {
-    background-color: #007bff; /* Bootstrap blue */
+    background-color: #007bff;
     color: #fff !important;
     text-decoration: underline;
+    border-radius: 12px;
+}
+
+.dropdown-menu li.text-muted {
+    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: default;
+}
+
+.dropdown-menu li.text-muted:hover {
+    background-color: #ff757a;
+    color: #fff !important;
+    border-radius: 12px;
+}
+
+.dropdown-menu li.text-muted:hover strong {
+    text-decoration: underline;
+}
+
+.dropdown-item[href="/logout"] {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-item[href="/logout"]:hover {
+    background-color: #343a40;
+    color: #fff !important;
+    text-decoration: underline;
+    border-radius: 12px;
 }
 
 </style>
@@ -96,8 +123,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
-                <form class="d-flex" role="search">
-                    <input class="search-input form-control me-2" type="search" placeholder="Search Destination"/>
+                <form action="/listings/search" method="GET" class="d-flex" role="search">
+                    <input name="q" class="search-input form-control me-2" type="search" placeholder="Search Destination" value="<%= typeof q !== 'undefined' ? q : '' %>"/>
                     <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </div>
@@ -109,15 +136,18 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                         <% if(currentUser) { %>
-                            <li class="px-3 pt-2 text-muted">
-                                <span class="small">Hello,</span> 
+                            <li class="px-3 pt-2 pb-2 text-muted align-items-center">
+                                <span>Hello,</span> 
+                                <% if(currentUser.role !== "host") { %>
+                                    <i class="fa-solid fa-circle-user"></i>
+                                <% } else { %>
+                                    <i class="fa-solid fa-house-user"></i>
+                                <% } %>
                                 <strong><%= currentUser.username %></strong>
                             </li>
-                            <li><hr class="dropdown-divider my-1"></li>
-                            <li class="px-3 pb-2 text-muted"><a class="dropdown-item" href="/logout">Logout</a></li>
+                            <li class="text-muted"><a class="dropdown-item" href="/logout">Logout</a></li>
                         <% } else { %>
                             <li><a class="dropdown-item text-primary" href="/signup">Signup</a></li>
-                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-success" href="/login">Login</a></li>
                         <% } %>
                     </ul>

@@ -7,6 +7,7 @@ const path = require("path");
 const ejsMate = require("ejs-mate");
 const mongoose = require('mongoose');
 const flash = require("connect-flash");
+const nodemailer = require("nodemailer");
 const session = require("express-session");
 const MonogStore = require("connect-mongo")
 const methodOverride = require("method-override");

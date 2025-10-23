@@ -10,6 +10,9 @@ router.route("/signup")
     .post(wrapAsync(userController.createUser)
 );
 
+router.get("/verifyOtp", userController.showVerifyOTP);
+router.post("/verifyOtp", wrapAsync(userController.verifyOTP));
+
 router.route("/login")
     .get(userController.loginForm)
     .post(saveRedirectUrl,

@@ -23,8 +23,16 @@ module.exports.isOwner = async (req, res, next) => {
     try{
         let {id} = req.params;
         let listing = await Listing.findById(id);
-        if(!listing.owner._id.equals(res.locals.currentUser._id)){
-            req.flash("error", "You do not have permission!");
+        if (!listing) {
+            req.flash("error", "Cannot find that property!");
+            return res.redirect("/listings");
+        }
+        // if(!listing.owner._id.equals(res.locals.currentUser._id)){
+        //     req.flash("error", "You do not have permission!");
+        //     return res.redirect(`/listings/${id}`);
+        // }
+        if (!listing.owner.equals(req.user._id)) {
+            req.flash("error", "You do not have permission to do that!");
             return res.redirect(`/listings/${id}`);
         }
         next();
@@ -62,4 +70,11 @@ module.exports.validateReview = (req, res, next) => {
     } else {
         next();
     }
+};
+
+module.exports.isHost = (req, res, next) => {
+    if (req.user.role === "host" || req.user.role === "admin") {
+        return next();
+    }
+    return res.redirect("/listings");
 };

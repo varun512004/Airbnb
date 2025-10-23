@@ -90,3 +90,28 @@ module.exports.deleteListing = async(req,res) => {
     req.flash("success", "Property Deleted!");
     res.redirect("/listings");
 };
+
+//Search Controller
+module.exports.searchListings = async (req, res) => {
+    const { q } = req.query;
+    if (!q) {
+        req.flash("error", "Please type something in search bar.");
+        return res.redirect("/listings");
+    }
+    const matchingCategories = await Category.find({ name: { $regex: q, $options: "i" } });
+    const categoryIds = matchingCategories.map(c => c._id);
+
+    const allListings = await Listing.find({
+        $or: [
+            { title: { $regex: q, $options: "i" } },
+            { location: { $regex: q, $options: "i" } },
+            { country: { $regex: q, $options: "i" } },
+            { category: { $in: categoryIds } }
+        ]
+    }).populate("category");
+
+    const categories = await Category.find({});
+    categories.sort((a, b) => (a.name === "Trending" ? -1 : b.name === "Trending" ? 1 : 0));
+
+    res.render("listings/index.ejs", { allListings, categories, q });
+};
