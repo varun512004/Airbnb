@@ -25,6 +25,46 @@
         </form>
     </div>
 <% } %>
+
+<% if(currentUser && currentUser.role === "user") { %>
+<div class="booking-panel col-4 offset-2 mt-3 mb-3 p-3 border rounded shadow">
+    <h4>Reserve this room</h4>
+
+    <form action="/bookings/<%= listing._id %>/reserve" method="POST">
+        <!-- Check-in & Check-out -->
+        <div class="mb-3">
+            <label for="checkin" class="form-label">Check-in</label>
+            <input type="date" id="checkin" name="checkin" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="checkout" class="form-label">Check-out</label>
+            <input type="date" id="checkout" name="checkout" class="form-control" required>
+        </div>
+
+        <!-- Guests -->
+        <div class="mb-3">
+            <label for="guests" class="form-label">Number of Guests</label>
+            <select name="guests" id="guests" class="form-select" required>
+                <% for(let i=1; i<=listing.maxGuests; i++) { %>
+                    <option value="<%= i %>"><%= i %> Guest<%= i>1 ? '' : 's' %></option>
+                <% } %>
+            </select>
+        </div>
+
+        <!-- Rooms Availability -->
+        <div class="mb-3">
+            <p class="text-muted">Rooms Available: <%= listing.availableRooms %></p>
+        </div>
+
+        <!-- Reserve Button -->
+        <button type="submit" class="btn btn-success w-100">Reserve</button>
+    </form>
+</div>
+<% } else if(currentUser && currentUser.role === "host") { %>
+    <p class="text-muted offset-2 mt-3">Hosts cannot book listings.</p>
+<% } else { %>
+    <a href="/login" class="btn btn-primary offset-2 mt-3">Login to Book</a>
+<% } %>
 <hr>
 
 <div class="all-reviews col-8 offset-2 mt-3 mb-3">
@@ -59,7 +99,7 @@
 </div>
 
 <hr>
-<% if (currentUser) { %>
+<% if(currentUser && currentUser.role === "user") { %>
 <div class="review col-8 offset-2 mt-3 mb-3">
     <h4>Leave a Review</h4>
     <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
