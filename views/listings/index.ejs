@@ -24,7 +24,7 @@
     <% } %>
     <% for (let listing of allListings) { %>
     <div class="col">
-        <a href="/listings/<%= listing._id %>" class="listing-link">
+        <a href="/<%= listing._id %>" class="listing-link">
             <div class="card listing-card h-100" data-category="<%= listing.category.map(c => c._id).join(',') %>">
                 <img src="<%- listing.image.url %>" class="card-img-top" alt="image">
                 <div class="card-img-overlay"></div>

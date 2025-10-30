@@ -75,9 +75,9 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/", listingRoutes);
-app.use("/listings/:id/reviews", reviewRoutes);
 app.use("/", userRoutes);
+app.use("/", listingRoutes);
+app.use("/:id/reviews", reviewRoutes);
 
 app.all(/.*/,(req, res, next) => {
     next(new expressError(404, "Page Not Found!"));

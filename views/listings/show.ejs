@@ -30,8 +30,8 @@
 
                 <% if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
                     <div class="btns mb-3">
-                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+                        <a href="/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <form action="/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
                             <button class="btn btn-danger">Delete</button>
                         </form>
                     </div>
@@ -45,7 +45,7 @@
     <div class="col-md-6">
         <div class="booking-panel p-4 border rounded shadow bg-light">
             <!-- <h4 class="mb-3">Reserve this stay</h4> -->
-            <form id="bookingForm" action="/listings/reservation/<%= listing._id %>" method="POST" novalidate class="needs-validation">
+            <form id="bookingForm" action="/reservation/<%= listing._id %>" method="POST" novalidate class="needs-validation">
                 <div class="mb-3">
                     <p class="fw-bold text-center">₹<span id="calculatedPrice"><u><%= listing.price.toLocaleString("en-IN") %></u></span> + GST for 1 night</p>
                 </div>
@@ -98,7 +98,7 @@
                     </div>
                     <p><%= review.comment %> </p>
                     <% if (currentUser && review.author.equals(currentUser._id)) { %>
-                    <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                    <form action="/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
                         <button class="btn btn-danger">Delete</button>
                     </form>
                     <% } %>
@@ -117,7 +117,7 @@
 <% if(currentUser && currentUser.role === "user") { %>
 <div class="review col-8 ms-5 mt-3 mb-3">
     <h4>Leave a Review</h4>
-    <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
+    <form action="/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
         <div class="star-rating d-flex mb-2">
             <div class="d-flex align-items-center mt-2 mb-2">
                 <label class="me-2 form-label">Rating:</label>

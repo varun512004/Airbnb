@@ -29,7 +29,7 @@ module.exports.addNewListing = async (req, res) => {
     newListing.image = {filename, url}
     await newListing.save();
     req.flash("success", "New Property Added Successfully!");
-    res.redirect("/listings");
+    res.redirect("/");
 };
 
 //Show Controller
@@ -79,7 +79,7 @@ module.exports.updateListing = async(req, res) => {
     listing.image = {filename, url};
     await listing.save();
     req.flash("success", "Property Updated!");
-    res.redirect(`/listings/${id}`);
+    res.redirect(`/${id}`);
 };
 
 //Delete Controller
@@ -88,7 +88,7 @@ module.exports.deleteListing = async(req,res) => {
     let deletedData = await Listing.findByIdAndDelete(id);
     console.log(deletedData);
     req.flash("success", "Property Deleted!");
-    res.redirect("/listings");
+    res.redirect("/");
 };
 
 //Search Controller

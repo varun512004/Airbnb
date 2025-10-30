@@ -54,7 +54,7 @@
 
         <!-- RIGHT SIDE: Reservation Summary -->
         <div class="col-md-7">
-        <form action="/listings/reservation/<%= listing._id %>/confirm" method="POST">
+        <form action="/reservation/<%= listing._id %>/confirm" method="POST">
             <!-- Hidden fields -->
             <input type="hidden" name="checkin" value="<%= reservationData.checkin.toISOString() %>">
             <input type="hidden" name="checkout" value="<%= reservationData.checkout.toISOString() %>">

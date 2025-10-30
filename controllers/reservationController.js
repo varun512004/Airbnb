@@ -7,7 +7,7 @@ module.exports.reservationDetails = async (req, res) => {
     const listing = await Listing.findById(id);
     if (!listing) {
         req.flash("error", "Listing not found");
-        return res.redirect("/listings");
+        return res.redirect("/");
     }
 
     const { checkin, checkout, guests } = req.body;
@@ -16,7 +16,7 @@ module.exports.reservationDetails = async (req, res) => {
     const checkoutDate = new Date(checkout);
     if (isNaN(checkinDate) || isNaN(checkoutDate) || checkoutDate <= checkinDate) {
         req.flash("error", "Invalid dates. Checkout must be after check-in.");
-        return res.redirect(`/listings/${id}`);
+        return res.redirect(`/${id}`);
     }
 
     const msPerDay = 1000 * 60 * 60 * 24;
@@ -53,7 +53,7 @@ module.exports.reservationDetails = async (req, res) => {
         const listing = await Listing.findById(id);
         if (!listing) {
         req.flash("error", "Listing not found");
-        return res.redirect("/listings");
+        return res.redirect("/");
         }
 
         // read hidden fields from the form
@@ -81,10 +81,10 @@ module.exports.reservationDetails = async (req, res) => {
         await listing.save();
 
         req.flash("success", "Reservation confirmed!");
-        res.redirect(`/listings/${listing._id}`);
+        res.redirect(`/${listing._id}`);
     } catch (err) {
         console.error(err);
         req.flash("error", "Could not confirm reservation.");
-        res.redirect("/listings");
+        res.redirect("/");
     }
 };

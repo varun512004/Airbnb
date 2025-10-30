@@ -63,7 +63,7 @@ module.exports.verifyOTP = async (req, res) => {
             if (err) return next(err);
             req.session.signupData = null; // clear session
             req.flash("success", "Welcome to Airbnb!");
-            return res.redirect("/listings");
+            return res.redirect("/");
         });
     } catch (e) {
         req.flash("error", e.message);
@@ -77,7 +77,7 @@ module.exports.loginForm = (req, res) => {
 
 module.exports.login = async (req, res) => {
     req.flash("success", "Welcome back!");
-    const redirectUrl = res.locals.redirectUrl || "/listings";
+    const redirectUrl = res.locals.redirectUrl || "/";
     delete req.session.redirectUrl;
     return res.redirect(redirectUrl);
 };
@@ -88,6 +88,6 @@ module.exports.logout = (req, res) => {
             return next(err);
         }
         req.flash("success", "Logout!");
-        return res.redirect("/listings");
+        return res.redirect("/");
     });
 };
