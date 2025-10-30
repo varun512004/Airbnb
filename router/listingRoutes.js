@@ -22,7 +22,7 @@ router.get("/new", isLoggedIn, isHost, ListingController.showNewForm);
 router.get("/search", wrapAsync(ListingController.searchListings));
 
 //Index and Create Routes
-router.route("/")
+router.route("/listings")
     .get(wrapAsync(ListingController.index))
     .post(isLoggedIn, isHost, validateListing, upload.single("listing[image][url]"), wrapAsync(ListingController.addNewListing)
 );
