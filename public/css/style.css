@@ -205,7 +205,8 @@ footer{
 }
 
 .show-img{
-    height: 50vh;
+    height: 55vh;
+    object-fit: cover;
 }
 
 .card-body p{

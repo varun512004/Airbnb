@@ -5,7 +5,7 @@
     <div class="col-8">
         <h1 class="mb-3"><%= listing.title %></h1>
     </div>
-    <div class="col-8">
+    <div class="col-7">
         <div class="card show-card listing-card">
             <img src="<%= listing.image.url %>" class="mb-3 card-img-top show-img" alt="<%= listing.image.filename %>">
         </div>
@@ -30,7 +30,7 @@
 
                 <% if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
                     <div class="btns mb-3">
-                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>
+                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
                             <button class="btn btn-danger">Delete</button>
                         </form>
