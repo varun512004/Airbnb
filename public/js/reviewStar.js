@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const stars = document.querySelectorAll(".star-rating i");
     const ratingInput = document.getElementById("rating-value");
 
+    if (!stars.length || !ratingInput) return;
+    
     // initialize first star
     ratingInput.value = 1;
     stars[0].classList.remove("fa-regular");

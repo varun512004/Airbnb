@@ -1,79 +1,92 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
-    <div class="card col-6 offset-2 show-card listing-card">
-        <div class="card-body">
-            <h2 class="card-text"><b><%= listing.title %></b></h2>
+
+<!-- Row 1: Full-width Image -->
+<div class="row mt-3 ms-4">
+    <div class="col-8">
+        <h1 class="mb-3"><%= listing.title %></h1>
+    </div>
+    <div class="col-8">
+        <div class="card show-card listing-card">
+            <img src="<%= listing.image.url %>" class="mb-3 card-img-top show-img" alt="<%= listing.image.filename %>">
         </div>
-        <img src="<%= listing.image.url %>" class="card-img-top show-img ms-3" alt="<%= listing.image.filename %>">
-        <div class="card-body">
-                <p class="fa-solid fa-user"></p><i class="fw-bold card-text"><%= listing.owner.username %></i>
-                <p class="card-text"><%= listing.description %></p>
-                <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %>
+    </div>
+</div>
+
+<!-- Row 2: Details + Booking Panel -->
+<div class="row mt-3">
+    <!-- Left Column: Stay Details -->
+    <div class="col-md-6">
+        <div class="card show-card listing-card mb-3">
+            <div class="card-body ms-4">
+                <!-- <h2 class="card-text"><b> </b></h2> -->
+                <p class="fa-solid fa-house-user"></p>
+                <i class="fw-bold card-text"><%= listing.owner.username %></i>
+                <p class="card-text"><h5 class="d-inline"><%= listing.title %></h5> - <%= listing.description %></p>
+                <!-- <p class="card-text">&#8377;
                     <i class="tax-info-gst-info">&nbsp;+18% GST</i>
-                </p>
+                </p> -->
                 <p class="card-text"><%= listing.location %></p>
                 <p class="card-text"><%= listing.country %></p>
-        </div>
-    </div>
-</div>
 
-<% if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
-    <div class="btns">
-        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark offset-2">Edit</a>
-        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-danger offset-4">Delete</button>
-        </form>
-    </div>
-<% } %>
-
-<% if(currentUser && currentUser.role === "user") { %>
-<div class="booking-panel col-4 offset-2 mt-3 mb-3 p-3 border rounded shadow">
-    <h4>Reserve this room</h4>
-
-    <form action="/bookings/<%= listing._id %>/reserve" method="POST">
-        <!-- Check-in & Check-out -->
-        <div class="mb-3">
-            <label for="checkin" class="form-label">Check-in</label>
-            <input type="date" id="checkin" name="checkin" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="checkout" class="form-label">Check-out</label>
-            <input type="date" id="checkout" name="checkout" class="form-control" required>
-        </div>
-
-        <!-- Guests -->
-        <div class="mb-3">
-            <label for="guests" class="form-label">Number of Guests</label>
-            <select name="guests" id="guests" class="form-select" required>
-                <% for(let i=1; i<=listing.maxGuests; i++) { %>
-                    <option value="<%= i %>"><%= i %> Guest<%= i>1 ? '' : 's' %></option>
+                <% if (currentUser && listing.owner._id.equals(currentUser._id)) { %>
+                    <div class="btns mb-3">
+                        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>
+                        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST" class="d-inline">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
                 <% } %>
-            </select>
+            </div>
         </div>
+    </div>
 
-        <!-- Rooms Availability -->
-        <div class="mb-3">
-            <p class="text-muted">Rooms Available: <%= listing.availableRooms %></p>
+    <!-- Right Column: Booking Panel -->
+    <% if (currentUser && currentUser.role === "user") { %>
+    <div class="col-md-6">
+        <div class="booking-panel p-4 border rounded shadow bg-light">
+            <!-- <h4 class="mb-3">Reserve this stay</h4> -->
+            <form id="bookingForm" action="/listings/reservation/<%= listing._id %>" method="POST" novalidate class="needs-validation">
+                <div class="mb-3">
+                    <p class="fw-bold text-center">₹<span id="calculatedPrice"><u><%= listing.price.toLocaleString("en-IN") %></u></span> + GST for 1 night</p>
+                </div>
+                <div class="booking-fields mt-3 mb-3">
+                    <div class="field">
+                        <label for="checkin">Check-in</label>
+                        <input type="date" id="checkin" name="checkin" required>
+                    </div>
+                    <div class="booking-divider"></div>
+                    <div class="field">
+                        <label for="checkout">Check-out</label>
+                        <input type="date" id="checkout" name="checkout" required>
+                    </div>
+                    <div class="booking-divider"></div>
+                    <div class="field text-center">
+                        <label for="guests">Guests</label>
+                        <div class="d-flex justify-content-center align-items-center gap-3">
+                            <button type="button" id="decreaseGuests" class="btn btn-sm mt-0">−</button>
+                            <span id="guestCount" class="fw-bold fs-6">1</span>
+                            <button type="button" id="increaseGuests" class="btn btn-sm mt-0">+</button>
+                        </div>
+                        <input type="hidden" name="guests" id="guests" value="1">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-danger py-2 w-50 d-block mx-auto rounded-pill">Reserve</button>
+            </form>
         </div>
-
-        <!-- Reserve Button -->
-        <button type="submit" class="btn btn-success w-100">Reserve</button>
-    </form>
+    </div>
+    <% } %>
 </div>
-<% } else if(currentUser && currentUser.role === "host") { %>
-    <p class="text-muted offset-2 mt-3">Hosts cannot book listings.</p>
-<% } else { %>
-    <a href="/login" class="btn btn-primary offset-2 mt-3">Login to Book</a>
-<% } %>
+
 <hr>
 
-<div class="all-reviews col-8 offset-2 mt-3 mb-3">
+<!-- Reviews Section -->
+<div class="all-reviews col-12 ms-5 mt-3 mb-3">
     <h4>All Reviews</h4>
     <div class="row">
         <% if(listing.reviews.length > 0) { %>
             <% listing.reviews.forEach(review => { %>
             <div class="card col-5 ms-2 mb-2">
-                <div class="card-body">
+                <div class="card-body col-md-12">
                     <h5 class="card-title mb-0">@<%= review.author.username %></h5>
                     <div class="d-flex align-items-center mt-1 mb-1 gap-2">
                         <div class="review-stars">
@@ -84,11 +97,11 @@
                         <span class="review-date"><%= new Date(review.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
                     </div>
                     <p><%= review.comment %> </p>
+                    <% if (currentUser && review.author.equals(currentUser._id)) { %>
                     <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                        <% if (currentUser && review.author.equals(currentUser._id)) { %>
                         <button class="btn btn-danger">Delete</button>
-                        <% } %>
                     </form>
+                    <% } %>
                 </div>
             </div>
             <% }) %>
@@ -99,8 +112,10 @@
 </div>
 
 <hr>
+
+<!-- Leave Review Form -->
 <% if(currentUser && currentUser.role === "user") { %>
-<div class="review col-8 offset-2 mt-3 mb-3">
+<div class="review col-8 ms-5 mt-3 mb-3">
     <h4>Leave a Review</h4>
     <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
         <div class="star-rating d-flex mb-2">
@@ -113,7 +128,6 @@
                 <i class="fa-regular fa-star" data-value="5"></i>
             </div>
         </div>
-        <!-- hidden input to actually send the rating -->
         <input type="hidden" name="review[rating]" id="rating-value" value="1" required/>
         <div class="invalid-feedback">Please select a rating.</div>
         <div>
@@ -125,3 +139,50 @@
     </form>
 </div>
 <% } %>
+
+<script>
+    // Prevent selecting past dates
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('checkin').setAttribute('min', today);
+    document.getElementById('checkout').setAttribute('min', today);
+
+    // Make checkout at least 1 day after checkin
+    document.getElementById('checkin').addEventListener('change', function() {
+        const checkinDate = new Date(this.value);
+        checkinDate.setDate(checkinDate.getDate() + 1);
+        document.getElementById('checkout').setAttribute('min', checkinDate.toISOString().split('T')[0]);
+    });
+
+    let guestCount = 1;
+    const maxGuests = 5; // You can change this limit if you want
+
+    const guestCountDisplay = document.getElementById("guestCount");
+    const guestInput = document.getElementById("guests");
+    const decreaseBtn = document.getElementById("decreaseGuests");
+    const increaseBtn = document.getElementById("increaseGuests");
+
+    increaseBtn.addEventListener("click", () => {
+        if (guestCount < maxGuests) {
+            guestCount++;
+            guestCountDisplay.textContent = guestCount;
+            guestInput.value = guestCount;
+            updatePrice();
+        }
+    });
+
+    decreaseBtn.addEventListener("click", () => {
+        if (guestCount > 1) {
+            guestCount--;
+            guestCountDisplay.textContent = guestCount;
+            guestInput.value = guestCount;
+            updatePrice();
+        }
+    });
+
+    // Price update logic (same as before)
+    function updatePrice() {
+        const basePrice = Number("<%= listing.price %>");
+        let updatedPrice = basePrice + (basePrice * 0.2 * (guestCount - 1));
+        document.getElementById("calculatedPrice").textContent = updatedPrice.toLocaleString("en-IN");
+    }
+</script>

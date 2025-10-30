@@ -3,9 +3,17 @@ const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const { isLoggedIn, isOwner, validateListing, isHost } = require("../middleware.js");
 const ListingController = require("../controllers/listingController.js");
+const reservationController = require("../controllers/reservationController.js");
 const multer = require('multer');
 const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage });
+
+//Reservation Route
+// Step 1: After clicking Reserve → Show guest details page
+router.post("/reservation/:id", isLoggedIn, reservationController.reservationDetails);
+
+// Step 2: After filling guest form → Proceed to payment
+router.post("/reservation/:id/confirm", isLoggedIn, reservationController.confirmReservation);
 
 //New Route
 router.get("/new", isLoggedIn, isHost, ListingController.showNewForm);
@@ -28,6 +36,5 @@ router.route("/:id")
 
 //Edit Route
 router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(ListingController.showEditForm));
-
 
 module.exports = router;

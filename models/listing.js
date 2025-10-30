@@ -33,6 +33,10 @@ const listingSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Category"
     }],
+    reservations : [{
+        type: Schema.Types.ObjectId,
+        ref: "Reservation"
+    }],
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {

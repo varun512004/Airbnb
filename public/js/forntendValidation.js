@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         description: (data) => data.trim().length >= 10,
         filename: (data) => data.trim() !== "",
         url: (data) => /^.+\.(jpg|jpeg|png|gif|webp)$/i.test(data),
-            // const isUrl = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
+        // const isUrl = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(data);
         price: (data) => /^[0-9]+(\.[0-9]{1,2})?$/.test(data) && Number(data) > 0,
         country: (data) => /^[A-Za-z\s]+$/.test(data) && data.trim().length >= 2,
         location: (data) => data.trim().length >= 2
@@ -33,14 +33,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add listeners
     [titleInput, descInput, urlInput, priceInput, countryInput, locationInput].forEach(input => {
-        input.addEventListener("input", () => {
-            const fieldName = input.name.split("[").pop().replace("]", "");
-            if (validators[fieldName]) {
-                applyValidation(input, validators[fieldName](input.value));
-            }
-        });
+        if(input){
+            input.addEventListener("input", () => {
+                const fieldName = input.name.split("[").pop().replace("]", "");
+                if (validators[fieldName]) {
+                    applyValidation(input, validators[fieldName](input.value));
+                }
+            });
+        }
     });
 
+if(form){
     form.addEventListener("submit", (e) => {
         let valid = true;
         if (!validators.title(titleInput.value)) valid = false;
@@ -63,4 +66,5 @@ document.addEventListener("DOMContentLoaded", () => {
             e.stopPropagation();
         }
     });
+}
 });

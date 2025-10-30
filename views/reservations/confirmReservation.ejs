@@ -1,0 +1,126 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Confirm Reservation for <%= listing.title %></h3>
+    
+    <div class="row">
+        <!-- LEFT SIDE: Image + Amenities -->
+        <div class="col-md-5">
+        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="img-fluid rounded mb-3" />
+        
+        <!-- 🏠 Room & Comfort Section -->
+        <div class="border rounded p-3 shadow-sm">
+            <h5 class="mb-3">Room & Comfort</h5>
+
+            <!-- Always visible amenities -->
+            <div class="text-secondary mb-2">
+            <i class="fa-solid fa-bed text-primary me-2"></i> Comfortable Bed
+            </div>
+            <div class="text-secondary mb-2">
+            <i class="fa-solid fa-wifi text-primary me-2"></i> Free Wi-Fi
+            </div>
+            <div class="text-secondary mb-2">
+            <i class="fa-solid fa-tv text-primary me-2"></i> Flat-screen TV
+            </div>
+            <div class="text-secondary mb-2">
+            <i class="fa-solid fa-fan text-primary me-2"></i> Air Conditioning
+            </div>
+
+            <!-- Hidden extra amenities -->
+            <div id="extraAmenities" class="mt-2" style="display: none;">
+            <div class="text-secondary mb-2">
+                <i class="fa-solid fa-shower text-primary me-2"></i> Hot Shower & Geyser
+            </div>
+            <div class="text-secondary mb-2">
+                <i class="fa-solid fa-mug-hot text-primary me-2"></i> Coffee / Tea Maker
+            </div>
+            <div class="text-secondary mb-2">
+                <i class="fa-solid fa-bath text-primary me-2"></i> Private Bathroom
+            </div>
+            <div class="text-secondary mb-2">
+                <i class="fa-solid fa-broom text-primary me-2"></i> Daily Housekeeping
+            </div>
+            <div class="text-secondary mb-2">
+                <i class="fa-solid fa-car text-primary me-2"></i> Free Parking
+            </div>
+            </div>
+
+            <!-- Toggle Button -->
+            <button id="toggleAmenities" class="btn btn-link p-0 text-decoration-none mt-2">
+            See more...
+            </button>
+        </div>
+        </div>
+
+        <!-- RIGHT SIDE: Reservation Summary -->
+        <div class="col-md-7">
+        <form action="/listings/reservation/<%= listing._id %>/confirm" method="POST">
+            <!-- Hidden fields -->
+            <input type="hidden" name="checkin" value="<%= reservationData.checkin.toISOString() %>">
+            <input type="hidden" name="checkout" value="<%= reservationData.checkout.toISOString() %>">
+            <input type="hidden" name="guests" value="<%= reservationData.guests %>">
+            <input type="hidden" name="nights" value="<%= reservationData.nights %>">
+            <input type="hidden" name="basePerNight" value="<%= reservationData.basePerNight %>">
+            <input type="hidden" name="subtotal" value="<%= reservationData.subtotal %>">
+            <input type="hidden" name="gst" value="<%= reservationData.gst %>">
+            <input type="hidden" name="totalPrice" value="<%= reservationData.totalPrice %>">
+
+            <!-- Booking details -->
+            <div class="border rounded p-4 shadow-sm">
+                <h5 class="mb-3"><b>Guest: </b><strong><%= currentUser.username %></strong> (<%= currentUser.email %>)</h5>
+                <%
+                const checkin = new Date(reservationData.checkin);
+                const checkout = new Date(reservationData.checkout);
+                const sameMonth = checkin.getMonth() === checkout.getMonth();
+                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                %>
+
+                <p><b>Dates</b><br>
+                <% if (sameMonth) { %>
+                    <%= checkin.getDate() %>–<%= checkout.getDate() %> <%= monthNames[checkin.getMonth()] %> <%= checkin.getFullYear() %>
+                <% } else { %>
+                    <%= checkin.getDate() %> <%= monthNames[checkin.getMonth()] %> – <%= checkout.getDate() %> <%= monthNames[checkout.getMonth()] %> <%= checkout.getFullYear() %>
+                <% } %>
+                </p>
+                <p><strong>Guests</strong><br> <%= reservationData.guests %> adult</p>
+                <!-- <p><strong>Nights</strong> </p> -->
+            </div>
+            <hr>
+            <div class="border rounded p-4 shadow-sm">
+                <h5 class="fw-bold mb-3">Price details</h5>
+                <div class="d-flex justify-content-between">
+                <span><%= reservationData.nights %> night<%= reservationData.nights > 1 ? 's' : '' %> × ₹<%= reservationData.basePerNight.toLocaleString("en-IN") %></span>
+                <span>₹<%= reservationData.subtotal.toLocaleString("en-IN") %></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                <span>Taxes</span>
+                <span>₹<%= reservationData.gst.toLocaleString("en-IN") %></span>
+                </div>
+
+                <hr class="my-2">
+
+                <div class="d-flex justify-content-between fw-bold">
+                <span>Total (INR)</span>
+                <span>₹<%= reservationData.totalPrice.toLocaleString("en-IN") %></span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-3">Confirm Reservation</button>
+        </form>
+        </div>
+    </div>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<!-- JS for toggle -->
+<script>
+    document.getElementById('toggleAmenities').addEventListener('click', function() {
+        const extras = document.getElementById('extraAmenities');
+        const isHidden = extras.style.display === 'none';
+        extras.style.display = isHidden ? 'block' : 'none';
+        this.textContent = isHidden ? 'See less...' : 'See more...';
+    });
+</script>

@@ -21,7 +21,7 @@ body{
 /* header */
 
 #logo, #logo i{
-    color: #fe424d;
+    color: #ff385c;
     vertical-align: middle;
 }
 
@@ -38,13 +38,13 @@ body{
 }
 
 .navbar {
-    height: 5rem;
+    height: 4.5rem;
     background-color: whitesmoke;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .nav-link{
-    color: #fe424d !important;
+    color: #ff385c !important;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
     border-radius: 2rem;
 }
@@ -163,7 +163,6 @@ footer{
     cursor: pointer;
 }
 
-
 .tax-toggle{
     border: none;
     background-color: whitesmoke;
@@ -206,7 +205,7 @@ footer{
 }
 
 .show-img{
-    height: 30vh;
+    height: 50vh;
 }
 
 .card-body p{
@@ -268,4 +267,67 @@ footer{
 
 .review-date{
     font-size: 14px;
+}
+
+.booking-fields {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 15px;
+    gap: 10px;
+    background-color: #fff;
+}
+
+/* Inner field groups */
+.booking-fields .field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+}
+
+.booking-fields label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+/* Inputs — small & neat */
+.booking-fields input[type="date"],
+.booking-fields select {
+    border: none;
+    outline: none;
+    text-align: center;
+    font-size: 0.9rem;
+    width: 90%;
+    margin: 0 auto;
+    background-color: transparent;
+}
+
+/* Divider between check-in and check-out */
+.booking-divider {
+    height: 30px;
+    width: 1px;
+    background-color: #ddd;
+}
+
+/* Subtle hover effect */
+.booking-fields:hover {
+    border-color: #ccc;
+}
+
+/* Focus state */
+.booking-fields input[type="date"]:focus,
+.booking-fields select:focus {
+    border-bottom: 1px solid #ff385c;
+}
+
+/* Reserve button styling */
+.booking-panel button {
+    margin-top: 10px;
+    border-radius: 8px;
+    font-weight: 600;
 }
