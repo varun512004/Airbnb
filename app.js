@@ -28,6 +28,7 @@ async function main (){
     await mongoose.connect(process.env.MONGO_URI);
 }
 
+app.set("trust proxy", 1);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname,"views"));
 app.use(express.urlencoded({extended : true}));
@@ -49,11 +50,13 @@ store.on("error", (err) => {
 
 const sessionOptions = {
     store,
-    secret: "mysupersecretcode!",
+    secret: process.env.SESSION_SECRET || "mysupersecretcode!",
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         expires: Date.now() + 10 * 24 * 60 * 60 * 1000,
         maxAge: 10 * 24 * 60 * 60 * 1000
     }
