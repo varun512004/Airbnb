@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname,"/public")));
 const store = MongoStore.create({
     mongoUrl:process.env.MONGO_URI,
     crypto: {
-        secret: "mysupersecretcode!"
+        secret: process.env.SESSION_SECRET,
     },
     touchAfter: 24*3600
 });
