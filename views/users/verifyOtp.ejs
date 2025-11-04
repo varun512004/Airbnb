@@ -1,5 +1,5 @@
 <% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
+<!-- <div class="row mt-3">
     <h1 class="col-6 offset-2">Verify OTP</h1>
     <div class="col-8 offset-2">
         <form action="/verifyOtp" method="POST" class="needs-validation" novalidate>
@@ -10,4 +10,51 @@
             <button type="submit" class="btn btn-success">Verify</button>
         </form>
     </div>
+</div> -->
+
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+    <h1 class="col-6 offset-2">Verify OTP</h1>
+    <div class="col-8 offset-2">
+        <form action="/verifyOtp" method="POST" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="otp" class="form-label">Enter OTP</label>
+                <input type="text" class="form-control" id="otp" name="otp" required>
+            </div>
+
+            <!-- Countdown timer display -->
+            <p id="timer" class="text-danger fw-bold"></p>
+
+            <button type="submit" class="btn btn-success">Verify</button>
+        </form>
+    </div>
 </div>
+
+<!-- Countdown timer script -->
+<script>
+    // Timer duration: 3 minutes (in seconds)
+    let timeLeft = 3 * 60;
+
+    const timerDisplay = document.getElementById("timer");
+
+    const countdown = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        // Update timer text
+        timerDisplay.textContent = `Time remaining: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            timerDisplay.textContent = "⏰ OTP expired! Please request a new one.";
+            timerDisplay.classList.remove("text-danger");
+            timerDisplay.classList.add("text-warning");
+
+            // Optionally disable the form
+            document.getElementById("otp").disabled = true;
+            document.querySelector("button[type='submit']").disabled = true;
+        }
+
+        timeLeft--;
+    }, 1000);
+</script>
