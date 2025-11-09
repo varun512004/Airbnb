@@ -12,6 +12,7 @@
   "author": "varun",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.16.2",
     "bcrypt": "^6.0.0",
     "bson": "^6.10.4",
     "cloudinary": "^1.41.3",
