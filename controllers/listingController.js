@@ -28,7 +28,7 @@ module.exports.addNewListing = async (req, res, next) => {
         console.log("MAP TOKEN:", mapSecretToken);
         let response = await geocodingClient
             .forwardGeocode({
-                query: "Paris, France",
+                query: "California, USA",
                 limit: 1
             })
             .send();
