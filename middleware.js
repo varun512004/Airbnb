@@ -73,9 +73,9 @@ module.exports.validateReview = (req, res, next) => {
 };
 
 module.exports.isHost = (req, res, next) => {
-    if (req.user.role === "host") {
-        return next();
+    if (!req.user || req.user.role !== "host") {
+        req.flash("error", "Become a host");
+        return res.redirect("/");
     }
-    req.flash("error", "Become a host");
-    return res.redirect("/listings");
+    return next();
 };

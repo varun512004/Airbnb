@@ -1,5 +1,8 @@
 const Listing = require("../models/listing.js");
 const Category = require("../models/category.js");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapSecretToken = process.env.MAP_SECRET_TOKEN;
+const geocodingClient = mbxGeocoding({ accessToken: mapSecretToken });
 
 //Index Controller
 module.exports.index = async (req,res) => {
@@ -20,13 +23,27 @@ module.exports.showNewForm = async(req, res) => {
     res.render("listings/new.ejs", { categories });
 };
 
-module.exports.addNewListing = async (req, res) => {
+module.exports.addNewListing = async (req, res, next) => {
+    try{
+        console.log("MAP TOKEN:", mapSecretToken);
+        let response = await geocodingClient
+            .forwardGeocode({
+                query: "Paris, France",
+                limit: 1
+            })
+            .send();
+            console.log(response);
+    } catch (err){
+        console.log("GEOCODE ERROR:", err.message || err);
+    }
+
     let url = req.file.path;
     let filename = req.file.filename;
-    // console.log(filename, "......", url);
+    console.log(filename, "......", url);
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image = {filename, url}
+    newListing.image = {filename, url};
+    console.log(newListing);
     await newListing.save();
     req.flash("success", "New Property Added Successfully!");
     res.redirect("/");

@@ -1,4 +1,7 @@
 <% layout("/layouts/boilerplate") %>
+<script>
+    const mapPublicToken = "<%= process.env.MAP_PUBLIC_TOKEN %>";
+</script>
 
 <!-- Row 1: Full-width Image -->
 <div class="row mt-3 ms-4">
@@ -140,45 +143,14 @@
 </div>
 <% } %>
 
+<div class="col-8 ms-5 mt-3 mb-3">
+    <h3>Where you'll be</h3>
+    <div id="map"></div>
+</div>
+
+<script src="/js/map.js"></script>
+
 <script>
-    // Prevent selecting past dates
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('checkin').setAttribute('min', today);
-    document.getElementById('checkout').setAttribute('min', today);
-
-    // Make checkout at least 1 day after checkin
-    document.getElementById('checkin').addEventListener('change', function() {
-        const checkinDate = new Date(this.value);
-        checkinDate.setDate(checkinDate.getDate() + 1);
-        document.getElementById('checkout').setAttribute('min', checkinDate.toISOString().split('T')[0]);
-    });
-
-    let guestCount = 1;
-    const maxGuests = 5; // You can change this limit if you want
-
-    const guestCountDisplay = document.getElementById("guestCount");
-    const guestInput = document.getElementById("guests");
-    const decreaseBtn = document.getElementById("decreaseGuests");
-    const increaseBtn = document.getElementById("increaseGuests");
-
-    increaseBtn.addEventListener("click", () => {
-        if (guestCount < maxGuests) {
-            guestCount++;
-            guestCountDisplay.textContent = guestCount;
-            guestInput.value = guestCount;
-            updatePrice();
-        }
-    });
-
-    decreaseBtn.addEventListener("click", () => {
-        if (guestCount > 1) {
-            guestCount--;
-            guestCountDisplay.textContent = guestCount;
-            guestInput.value = guestCount;
-            updatePrice();
-        }
-    });
-
     // Price update logic (same as before)
     function updatePrice() {
         const basePrice = Number("<%= listing.price %>");

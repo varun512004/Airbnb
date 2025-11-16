@@ -20,110 +20,112 @@
         font-size: 0.9rem;
     }
 
-/* Dropdown button */
-.dropdown-toggle::after {
-    display: none;
-}
-.dropdown .btn {
-    background-color: white; /* Airbnb style clean white button */
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    font-size: 1.2rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    transition: box-shadow 0.2s ease, background-color 0.2s ease;
-}
+    /* Dropdown button */
+    .dropdown-toggle::after {
+        display: none;
+    }
+    .dropdown .btn {
+        background-color: white; /* Airbnb style clean white button */
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        font-size: 1.2rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    }
 
-.dropdown .btn:hover {
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    background-color: #f7f7f7;
-}
+    .dropdown .btn:hover {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        background-color: #f7f7f7;
+    }
 
-/* Dropdown menu */
-.dropdown-menu {
-    border-radius: 12px;
-    padding: 0 !important;
-    /* min-width: 150px; */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    border: none;
-}
+    /* Dropdown menu */
+    .dropdown-menu {
+        border-radius: 12px;
+        padding: 0 !important;
+        /* min-width: 150px; */
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        border: none;
+    }
 
-/* Dropdown items */
-.dropdown-item {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-    color: #222;
-    transition: background-color 0.2s ease;
-}
+    /* Dropdown items */
+    .dropdown-item {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.95rem;
+        color: #222;
+        transition: background-color 0.2s ease;
+    }
 
-.dropdown-item:hover {
-    background-color: #f7f7f7;
-}
+    .dropdown-item:hover {
+        background-color: #f7f7f7;
+    }
 
-.dropdown .fa-bars {
-    font-size: 1.2rem;
-}
+    .dropdown .fa-bars {
+        font-size: 1.2rem;
+    }
 
-.dropdown-menu .text-muted {
-    font-size: 0.9rem;
-    color: #fe424d !important;
-}
+    .dropdown-menu .text-muted {
+        font-size: 0.9rem;
+        color: #fe424d !important;
+    }
 
-.dropdown-item.text-success:hover {
-    background-color: #28a745;
-    color: #fff !important;
-    text-decoration: underline;
-    border-radius: 12px;
-}
+    .dropdown-item.text-success:hover {
+        background-color: #28a745;
+        color: #fff !important;
+        text-decoration: underline;
+        border-radius: 12px;
+    }
 
-.dropdown-item.text-primary:hover {
-    background-color: #007bff;
-    color: #fff !important;
-    text-decoration: underline;
-    border-radius: 12px;
-}
+    .dropdown-item.text-primary:hover {
+        background-color: #007bff;
+        color: #fff !important;
+        text-decoration: underline;
+        border-radius: 12px;
+    }
 
-.dropdown-menu li.text-muted {
-    transition: background-color 0.2s ease, color 0.2s ease;
-    cursor: default;
-}
+    .dropdown-menu li.text-muted {
+        transition: background-color 0.2s ease, color 0.2s ease;
+        cursor: default;
+    }
 
-.dropdown-menu li.text-muted:hover {
-    background-color: #ff757a;
-    color: #fff !important;
-    border-radius: 12px;
-}
+    .dropdown-menu li.text-muted:hover {
+        background-color: #ff757a;
+        color: #fff !important;
+        border-radius: 12px;
+    }
 
-.dropdown-menu li.text-muted:hover strong {
-    text-decoration: underline;
-}
+    .dropdown-menu li.text-muted:hover strong {
+        text-decoration: underline;
+    }
 
-.dropdown-item[href="/logout"] {
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
+    .dropdown-item[href="/logout"] {
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
 
-.dropdown-item[href="/logout"]:hover {
-    background-color: #343a40;
-    color: #fff !important;
-    text-decoration: underline;
-    border-radius: 12px;
-}
-
+    .dropdown-item[href="/logout"]:hover {
+        background-color: #343a40;
+        color: #fff !important;
+        text-decoration: underline;
+        border-radius: 12px;
+    }
 </style>
+
 <nav class="navbar navbar-expand-lg bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand" id="logo" href="/"><b><i class="fa-brands fa-airbnb"></i>airbnb</b></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
-            <span class="navbar-toggler-icon"></span>
+        <a class="navbar-brand" id="logo" href="/">
+            <b><i class="fa-brands fa-airbnb"></i>airbnb</b>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <i class="fa-solid fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav ms-auto">
-                <form action="/search" method="GET" class="d-flex" role="search">
+                <form action="/search" method="GET" class="d-flex search-wrapper mx-auto my-2 my-lg-0" role="search">
                     <input name="q" class="search-input form-control me-2" type="search" placeholder="Search Destination" value="<%= typeof q !== 'undefined' ? q : '' %>"/>
                     <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>

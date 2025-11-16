@@ -8,12 +8,11 @@ const multer = require('multer');
 const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage });
 
-//Reservation Route
-// Step 1: After clicking Reserve → Show guest details page
-router.post("/reservation/:id", isLoggedIn, reservationController.reservationDetails);
-
-// Step 2: After filling guest form → Proceed to payment
-router.post("/reservation/:id/confirm", isLoggedIn, reservationController.confirmReservation);
+//Index and Create Routes
+router.route("/")
+    .get(wrapAsync(ListingController.index))
+    .post(isLoggedIn, validateListing, upload.single("listing[image][url]"), wrapAsync(ListingController.addNewListing)
+);
 
 //New Route
 router.get("/new", isLoggedIn, isHost, ListingController.showNewForm);
@@ -21,11 +20,12 @@ router.get("/new", isLoggedIn, isHost, ListingController.showNewForm);
 // Search Route
 router.get("/search", wrapAsync(ListingController.searchListings));
 
-//Index and Create Routes
-router.route("/")
-    .get(wrapAsync(ListingController.index))
-    .post(isLoggedIn, isHost, validateListing, upload.single("listing[image][url]"), wrapAsync(ListingController.addNewListing)
-);
+//Reservation Route
+// Step 1: After clicking Reserve → Show guest details page
+router.post("/reservation/:id", isLoggedIn, reservationController.reservationDetails);
+
+// Step 2: After filling guest form → Proceed to payment
+router.post("/reservation/:id/confirm", isLoggedIn, reservationController.confirmReservation);
 
 //Show, Update, Delete Routes
 router.route("/:id")
